@@ -1,0 +1,40 @@
+{
+  "name": "rabbit",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon --exec babel-node app/index.js",
+    "create-dev-tables": "babel-node ./app/db/dbConnection createAllTables",
+    "setup": "npm-run-all -p start create-dev-tables"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GhoulIsReal/rabbit.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/GhoulIsReal/rabbit/issues"
+  },
+  "homepage": "https://github.com/GhoulIsReal/rabbit#readme",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "make-runnable": "^1.3.8",
+    "micromq": "^3.0.2",
+    "moment": "^2.29.1",
+    "npm-run-all": "^4.1.5",
+    "pg": "^8.5.1"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.12.10",
+    "@babel/node": "^7.12.10",
+    "@babel/preset-env": "^7.12.11",
+    "nodemon": "^2.0.6"
+  }
+}
