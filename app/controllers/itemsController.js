@@ -1,5 +1,6 @@
 import dbQuery from "../db/dbQuery";
 import moment from "moment";
+import { isEmpty } from "../helpers/validations";
 
 /**
  * Create An Item
@@ -10,23 +11,18 @@ import moment from "moment";
 
 const createItem = async (req, res) => {
   const { name, isSold } = req.body;
-
+  const user = req.user;
   const created_on = moment(new Date());
 
-  if (
-    name === undefined ||
-    name === "" ||
-    isSold === undefined ||
-    isSold === ""
-  ) {
+  if (isEmpty(name) || isEmpty(isSold)) {
     return res.status(400).send("name and isSold field cannot be empty");
   }
 
   const createItemQuery = `INSERT INTO
-  items(name, isSold, created_on)
-  VALUES($1, $2, $3)
+  items(name, isSold, sellerid, created_on)
+  VALUES($1, $2, $3, $4)
   returning *`;
-  const values = [name, isSold, created_on];
+  const values = [name, isSold, user.user_id, created_on];
 
   try {
     await dbQuery.query(createItemQuery, values);

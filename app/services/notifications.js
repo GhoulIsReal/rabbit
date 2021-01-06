@@ -1,6 +1,6 @@
 import MicroMQ from "micromq";
-const WebSocket = require("ws");
 import env from "../../env";
+import mailer from "../mailer";
 
 const notifications = new MicroMQ({
   name: "notifications",
@@ -9,37 +9,15 @@ const notifications = new MicroMQ({
   },
 });
 
-const ws = new WebSocket.Server({
-  port: process.env.PORT,
-});
-
-const clients = new Map();
-
-ws.on("connection", (connection) => {
-  connection.on("message", (message) => {
-    const { event, data } = JSON.parse(message);
-    if (event === "authorize" && data.userID) {
-      clients.set(data.userID, connection);
-    }
+notifications.action("notify", (meta) => {
+  const { user, itemName } = meta;
+  console.log(user, itemName);
+  mailer({
+    from: "no-reply-rabbit@mail.ru",
+    to: user.email,
+    subject: "Notification from Rabbit",
+    html: `Hello ${user.first_name}, your item(${itemName}) was sold !`,
   });
 });
 
-ws.on("connection", (connection) => {
-  connection.on("disconnect", clients.clear(connection.userID));
-});
-
-notifications.action("notify", (meta) => {
-  if (!meta.userID || !meta.text) {
-    return [400, { error: "Bad data" }];
-  }
-
-  const connection = clients.get(meta.userId);
-
-  if (!connection) {
-    return [404, { error: "User not found" }];
-  }
-
-  connection.send(meta.text);
-
-  return { ok: true };
-});
+notifications.start();

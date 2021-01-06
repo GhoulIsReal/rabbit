@@ -1,10 +1,9 @@
-import dotenv from 'dotenv';
+require('dotenv').config();
 
-dotenv.config();
-
-export default {
+module.exports = {
   database_url: process.env.DATABASE_URL,
   secret: process.env.SECRET,
   port: process.env.PORT || 5000,
   rabbit_url: process.env.RABBIT_URL,
-}
+  mail_pass: process.env.MAIL_PASSWORD,
+};

@@ -5,6 +5,10 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon --exec babel-node app/index.js",
+    "start:market": "nodemon --exec babel-node app/services/market.js",
+    "start:items": "nodemon --exec babel-node app/services/items.js",
+    "start:notifications": "nodemon --exec babel-node app/services/notifications.js",
+    "start:users": "nodemon --exec babel-node app/services/users.js",
     "create-dev-tables": "babel-node ./app/db/dbConnection createAllTables",
     "setup": "npm-run-all -p start create-dev-tables"
   },
@@ -28,6 +32,7 @@
     "make-runnable": "^1.3.8",
     "micromq": "^3.0.2",
     "moment": "^2.29.1",
+    "nodemailer": "^6.4.17",
     "npm-run-all": "^4.1.5",
     "pg": "^8.5.1"
   },
