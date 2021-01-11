@@ -10,6 +10,7 @@
     "start:notifications": "nodemon --exec babel-node app/services/notifications.js",
     "start:users": "nodemon --exec babel-node app/services/users.js",
     "create-dev-tables": "babel-node ./app/db/dbConnection createAllTables",
+    "seed-user-table": "babel-node ./app/helpers/seed seedUser",
     "setup": "npm-run-all -p start create-dev-tables"
   },
   "repository": {

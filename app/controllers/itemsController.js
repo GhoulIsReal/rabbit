@@ -10,19 +10,19 @@ import { isEmpty } from "../helpers/validations";
  */
 
 const createItem = async (req, res) => {
-  const { name, isSold } = req.body;
+  const { name, price } = req.body;
   const user = req.user;
   const created_on = moment(new Date());
 
-  if (isEmpty(name) || isEmpty(isSold)) {
-    return res.status(400).send("name and isSold field cannot be empty");
+  if (isEmpty(name) || isEmpty(price)) {
+    return res.status(400).send("name and price field cannot be empty");
   }
 
   const createItemQuery = `INSERT INTO
-  items(name, isSold, sellerid, created_on)
-  VALUES($1, $2, $3, $4)
+  items(name, price, isSold, sellerid, created_on)
+  VALUES($1, $2, $3, $4, $5)
   returning *`;
-  const values = [name, isSold, user.user_id, created_on];
+  const values = [name, price, false, user.user_id, created_on];
 
   try {
     await dbQuery.query(createItemQuery, values);

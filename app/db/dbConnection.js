@@ -29,6 +29,7 @@ const createItemsTable = () => {
   const itemCreateQuery = `CREATE TABLE IF NOT EXISTS items
     (id SERIAL PRIMARY KEY NOT NULL, 
     name VARCHAR(100),
+    price smallint NOT NULL,
     isSold boolean NOT NULL,  
     sellerID smallint NOT NULL,
     created_on DATE NOT NULL)`;
